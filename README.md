@@ -12,7 +12,11 @@ TODO: Write usage instructions here
 
 ## Development
 
-TODO: Write development instructions here
+```bash
+sentry -b "crystal build ./src/tsm-health-check.cr -o ./bin/tsm-health-check" \
+       -r "./bin/tsm-health-check" \
+       --run-args "-c conf/test.yml"
+```
 
 ## Contributing
 

@@ -1,0 +1,35 @@
+checks:
+- name: tsm-address-management
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-address-management
+  up:
+    timeout: 5
+    status_code: 200
+    json:
+      path: ".status"
+      value: "UP"
+    response:
+      status_code: 200
+      content_type: application/json
+      body: "{ \"status\": \"UP\", \"description\": \"Everything is alright\" }"
+  down:
+    response:
+      status_code: 503
+      content_type: application/json
+      body: "{ \"status\": \"DOWN\", \"description\": \"The service is unavailable\" }"
+- name: tsm-user-management
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-user-management
+  up:
+    timeout: 5
+    status_code: 200
+    json:
+      path: ".status"
+      value: "UP"
+    response:
+      status_code: 200
+      content_type: application/json
+      body: "{ \"status\": \"UP\", \"description\": \"Everything is alright\" }"
+  down:
+    response:
+      status_code: 503
+      content_type: application/json
+      body: "{ \"status\": \"DOWN\", \"description\": \"The service is unavailable\" }"

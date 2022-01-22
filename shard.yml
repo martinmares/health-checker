@@ -8,6 +8,16 @@ targets:
   tsm-health-check:
     main: src/tsm-health-check.cr
 
+dependencies:
+  tallboy:
+    github: epoch/tallboy
+  kemal:
+    github: kemalcr/kemal
+  crest:
+    github: mamantoha/crest
+  markd:
+    github: icyleaf/markd
+
 crystal: 1.3.2
 
 license: MIT
