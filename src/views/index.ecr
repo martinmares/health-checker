@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="DataLite" />
+    <meta name="generator" content="Crystal lang, Kemal" />
+    <title>Health checks</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <link href="/css/custom.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="col-lg-8 mx-auto p-3 py-md-5">
+      <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+        <a
+          href="/"
+          class="d-flex align-items-center text-dark text-decoration-none"
+        >
+          <span class="fs-4">Health checks</span>
+        </a>
+      </header>
+
+      <main>
+        <h1>List of services</h1>
+        <%= _table %>
+      </main>
+      <footer class="pt-5 my-5 text-muted border-top">
+        <p>
+          Created by <a href="https://www.datalite.cz">DataLite</a>, primarily
+          for <a href="https://tsm.datalite.cz">tSM</a> app.
+        </p>
+      </footer>
+    </div>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
