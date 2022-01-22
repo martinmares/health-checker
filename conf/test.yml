@@ -1,20 +1,24 @@
 .default_json_check: &default_json_check
   up:
-    connect_timeout: 1
-    read_timeout: 5
-    status_code: 200
-    json:
-      path: ".status"
-      value: "UP"
+    request:
+      timeout: 5
+      status_code: 200
+      type: json
+      rules:
+        - path: ".status"
+          value: "UP"
     response:
       status_code: 200
       content_type: application/json
-      body: '{ "status": "UP", "description": "Everything is alright" }'
+      body: '{ "status": "UP", "description": "The service is up and running." }'
   down:
     response:
       status_code: 503
       content_type: application/json
-      body: '{ "status": "DOWN", "description": "The service is unavailable" }'
+      body: '{ "status": "DOWN", "description": "The service is unavailable!" }'
+html:
+  title: <strong>tSM</strong> - health checker
+  footer: Created by <a href="https://www.datalite.cz">DataLite</a>, primarily for <a href="https://tsm.datalite.cz">tSM</a> app.
 checks:
 - name: tsm-address-management
   endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-address-management

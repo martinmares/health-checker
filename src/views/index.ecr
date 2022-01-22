@@ -6,7 +6,11 @@
     <meta name="description" content="" />
     <meta name="author" content="DataLite" />
     <meta name="generator" content="Crystal lang, Kemal" />
-    <title>Health checks</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title><%= _title %></title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <style>
       .bd-placeholder-img {
@@ -32,7 +36,7 @@
           href="/"
           class="d-flex align-items-center text-dark text-decoration-none"
         >
-          <span class="fs-4">Health checks</span>
+          <span class="fs-4"><%= _title %></span>
         </a>
       </header>
 
@@ -41,9 +45,7 @@
         <%= _table %>
       </main>
       <footer class="pt-5 my-5 text-muted border-top">
-        <p>
-          Created by <a href="https://www.datalite.cz">DataLite</a>, primarily
-          for <a href="https://tsm.datalite.cz">tSM</a> app.
+        <p><%= _footer %>
         </p>
       </footer>
     </div>

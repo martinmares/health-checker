@@ -1,20 +1,24 @@
 .default_json_check: &default_json_check
   up:
-    connect_timeout: 1
-    read_timeout: 5
-    status_code: 200
-    json:
-      path: ".status"
-      value: "UP"
+    request:
+      timeout: 5
+      status_code: 200
+      type: json
+      rules:
+        - path: ".status"
+          value: "UP"
     response:
       status_code: 200
       content_type: application/json
-      body: '{ "status": "UP", "description": "Everything is alright" }'
+      body: '{ "status": "UP", "description": "The service is up and running." }'
   down:
     response:
       status_code: 503
       content_type: application/json
-      body: '{ "status": "DOWN", "description": "The service is unavailable" }'
+      body: '{ "status": "DOWN", "description": "The service is unavailable!" }'
+html:
+  title: Healt checker - <strong>dev mode</strong>
+  footer: Developed by Martin Mareš, with <a href="https://crystal-lang.org">Crystal lang</a>.
 checks:
 - name: test-timeout-1s
   endpoint: http://httpstat.us/200?sleep=1000

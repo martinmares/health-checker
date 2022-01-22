@@ -1,4 +1,4 @@
-module TsmHealthCheck
+module HealthChecker
   class HtmlUtils
     def self.table_builder(headers : Array(String), rows : Array(Array(String)))
       html = String.build do |str|

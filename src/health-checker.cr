@@ -11,7 +11,7 @@ require "../src/arg_parser"
 require "../src/html_utils"
 require "../src/checker"
 
-module TsmHealthCheck
+module HealthChecker
   class App
     @config : Config
     @arg_pars : ArgParser
@@ -32,7 +32,10 @@ module TsmHealthCheck
           data_rows << [check.name, "<a href='/check/#{check.name}'>/check/#{check.name}</a>"]
         end
 
+        _title = @config.html.title
+        _footer = @config.html.footer
         _table = HtmlUtils.table_builder(headers, data_rows)
+
         render "src/views/index.ecr"
       end
 
@@ -46,7 +49,7 @@ module TsmHealthCheck
         get "/check/#{check.name}" do |env|
           status_code, body = Checker.probe(check)
           case {status_code, body}
-          when {check.up.status_code, _}
+          when {check.up.request.status_code, _}
             Log.info { "probe status_code: #{status_code}, body: #{body}" }
             env.response.content_type = check.up.response.content_type
             check.up.response.body

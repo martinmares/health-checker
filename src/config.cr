@@ -1,8 +1,11 @@
 require "yaml"
 
-module TsmHealthCheck
+module HealthChecker
   class Config
     include YAML::Serializable
+
+    @[YAML::Field(key: "html")]
+    property html : Html
 
     @[YAML::Field(key: "checks")]
     property checks : Array(Check)
@@ -15,6 +18,16 @@ module TsmHealthCheck
     def each_with_checks
       checks.each { |check| yield(check) }
     end
+  end
+
+  class Html
+    include YAML::Serializable
+
+    @[YAML::Field(key: "title")]
+    property title : String
+
+    @[YAML::Field(key: "footer")]
+    property footer : String
   end
 
   class Check
@@ -36,23 +49,30 @@ module TsmHealthCheck
   class Up
     include YAML::Serializable
 
-    @[YAML::Field(key: "connect_timeout")]
-    property connect_timeout : Int32
-
-    @[YAML::Field(key: "read_timeout")]
-    property read_timeout : Int32
-
-    @[YAML::Field(key: "status_code")]
-    property status_code : Int32
-
-    @[YAML::Field(key: "json")]
-    property json : Json
+    @[YAML::Field(key: "request")]
+    property request : Request
 
     @[YAML::Field(key: "response")]
     property response : Response
   end
 
-  class Json
+  class Request
+    include YAML::Serializable
+
+    @[YAML::Field(key: "timeout")]
+    property timeout : Int32
+
+    @[YAML::Field(key: "status_code")]
+    property status_code : Int32
+
+    @[YAML::Field(key: "type")]
+    property type : String
+
+    @[YAML::Field(key: "rules")]
+    property type : Array(Rule)
+  end
+
+  class Rule
     include YAML::Serializable
 
     @[YAML::Field(key: "path")]

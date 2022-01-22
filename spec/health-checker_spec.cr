@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe Tsm::Health::Check do
+describe HealthChecker do
   # TODO: Write tests
 
   it "works" do

@@ -1,4 +1,4 @@
-# tsm-health-check
+# health-checker
 
 TODO: Write a description here
 
@@ -13,14 +13,14 @@ TODO: Write usage instructions here
 ## Development
 
 ```bash
-sentry -b "crystal build ./src/tsm-health-check.cr -o ./bin/tsm-health-check" \
-       -r "./bin/tsm-health-check" \
-       --run-args "-c conf/test.yml"
+sentry -b "crystal build ./src/health-checker.cr -o ./bin/health-checker" \
+       -r "./bin/health-checker" \
+       --run-args "-c conf/dev.yml"
 ```
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/tsm-health-check/fork>)
+1. Fork it (<https://github.com/your-github-user/health-checker/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

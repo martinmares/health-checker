@@ -2,7 +2,7 @@ require "option_parser"
 require "colorize"
 require "log"
 
-module TsmHealthCheck
+module HealthChecker
   class ArgParser
     getter args
     @args : Hash(Symbol, String)
@@ -14,7 +14,7 @@ module TsmHealthCheck
     def parse
       args = Hash(Symbol, String).new
       OptionParser.parse do |parser|
-        parser.banner = "Usage: tsm-health-check [arguments]"
+        parser.banner = "Usage: health-checker [arguments]"
         parser.on("-c CONFIG", "--config=CONFIG", "Specifies the name of the configuration file") do |_config|
           args[:config] = _config
         end

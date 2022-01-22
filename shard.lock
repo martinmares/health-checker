@@ -40,3 +40,7 @@ shards:
     git: https://github.com/epoch/tallboy.git
     version: 0.9.3
 
+  timeout:
+    git: https://github.com/hugoabonizio/timeout.cr.git
+    version: 0.1.0+git.commit.08d9d37cb107f462d9f58058cc81c28cef29838b
+
