@@ -2,7 +2,7 @@ module TsmHealthCheck
   class HtmlUtils
     def self.table_builder(headers : Array(String), rows : Array(Array(String)))
       html = String.build do |str|
-        str << "<table class='table table-hover'>"
+        str << "<table class='table table-hover table-sm'>"
 
         # Headers
         str << "<thead>"
