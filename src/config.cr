@@ -36,8 +36,11 @@ module TsmHealthCheck
   class Up
     include YAML::Serializable
 
-    @[YAML::Field(key: "timeout")]
-    property timeout : Int32
+    @[YAML::Field(key: "connect_timeout")]
+    property connect_timeout : Int32
+
+    @[YAML::Field(key: "read_timeout")]
+    property read_timeout : Int32
 
     @[YAML::Field(key: "status_code")]
     property status_code : Int32
@@ -63,7 +66,7 @@ module TsmHealthCheck
     include YAML::Serializable
 
     @[YAML::Field(key: "status_code")]
-    property status_code : String
+    property status_code : Int32
 
     @[YAML::Field(key: "content_type")]
     property content_type : String

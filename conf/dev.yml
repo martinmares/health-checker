@@ -1,0 +1,45 @@
+.default_json_check: &default_json_check
+  up:
+    connect_timeout: 1
+    read_timeout: 5
+    status_code: 200
+    json:
+      path: ".status"
+      value: "UP"
+    response:
+      status_code: 200
+      content_type: application/json
+      body: '{ "status": "UP", "description": "Everything is alright" }'
+  down:
+    response:
+      status_code: 503
+      content_type: application/json
+      body: '{ "status": "DOWN", "description": "The service is unavailable" }'
+checks:
+- name: tsm-address-management
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-address-management
+  <<: *default_json_check
+- name: tsm-user-management
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-user-management
+  <<: *default_json_check
+- name: tsm-check-timeout-1-sec
+  endpoint: http://127.0.0.1:3000/mock/timeout/1
+  <<: *default_json_check
+- name: tsm-check-timeout-2-sec
+  endpoint: http://127.0.0.1:3000/mock/timeout/2
+  <<: *default_json_check
+- name: tsm-check-timeout-3-sec
+  endpoint: http://127.0.0.1:3000/mock/timeout/3
+  <<: *default_json_check
+- name: tsm-check-timeout-4-sec
+  endpoint: http://127.0.0.1:3000/mock/timeout/4
+  <<: *default_json_check
+- name: tsm-check-timeout-5-sec
+  endpoint: http://127.0.0.1:3000/mock/timeout/5
+  <<: *default_json_check
+- name: tsm-check-timeout-10-sec
+  endpoint: http://127.0.0.1:3000/mock/timeout/10
+  <<: *default_json_check
+- name: tsm-check-host-not-exist
+  endpoint: http://host-not-exist.com/health/host-not-exist
+  <<: *default_json_check

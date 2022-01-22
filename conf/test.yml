@@ -1,6 +1,7 @@
 .default_json_check: &default_json_check
   up:
-    timeout: 5
+    connect_timeout: 1
+    read_timeout: 5
     status_code: 200
     json:
       path: ".status"
@@ -18,6 +19,75 @@ checks:
 - name: tsm-address-management
   endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-address-management
   <<: *default_json_check
+- name: tsm-calendar
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-calendar
+  <<: *default_json_check
+- name: tsm-config-form
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-config-form
+  <<: *default_json_check
+- name: tsm-gateway
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-gateway
+  <<: *default_json_check
+- name: tsm-process-definition
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-process-definition
+  <<: *default_json_check
+- name: tsm-service-discovery
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-service-discovery
+  <<: *default_json_check
+- name: tsm-ticket
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-ticket
+  <<: *default_json_check
 - name: tsm-user-management
   endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-user-management
+  <<: *default_json_check
+- name: tsm-change-management
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-change-management
+  <<: *default_json_check
+- name: tsm-dms
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-dms
+  <<: *default_json_check
+- name: tsm-cetin-deco-distributor
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-distributor
+  <<: *default_json_check
+- name: tsm-cetin-deco-import-lokality
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-import-lokality
+  <<: *default_json_check
+- name: tsm-cetin-deco-import-node
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-import-node
+  <<: *default_json_check
+- name: tsm-cetin-deco-import-sluzby
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-import-sluzby
+  <<: *default_json_check
+- name: tsm-cetin-deco-it
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-it
+  <<: *default_json_check
+- name: tsm-cetin-deco-krok
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-krok
+  <<: *default_json_check
+- name: tsm-cetin-deco-mobilni
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-mobilni
+  <<: *default_json_check
+- name: tsm-cetin-deco-pary
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-pary
+  <<: *default_json_check
+- name: tsm-cetin-deco-porty
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-porty
+  <<: *default_json_check
+- name: tsm-cetin-deco-prioritizer
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-prioritizer
+  <<: *default_json_check
+- name: tsm-cetin-deco-prvek
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-prvek
+  <<: *default_json_check
+- name: tsm-cetin-deco-rozvadec
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-rozvadec
+  <<: *default_json_check
+- name: tsm-cetin-deco-sluzby
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-sluzby
+  <<: *default_json_check
+- name: tsm-cetin-deco-technol
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-technol
+  <<: *default_json_check
+- name: tsm-cetin-deco-worker
+  endpoint: http://tsm-metrics.apps.ceokdt401.server.cetin/health/tsm-cetin-deco-worker
   <<: *default_json_check
