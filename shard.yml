@@ -1,0 +1,13 @@
+name: tsm-health-check
+version: 0.1.0
+
+authors:
+  - Martin Mareš <mares@datalite.cz>
+
+targets:
+  tsm-health-check:
+    main: src/tsm-health-check.cr
+
+crystal: 1.3.2
+
+license: MIT
