@@ -3,6 +3,7 @@ require "timeout"
 require "colorize"
 
 require "../src/config"
+require "../src/json_parser"
 
 module HealthChecker
   class Checker
@@ -25,7 +26,7 @@ module HealthChecker
       spawn do
         begin
           resp = Crest.get(uri.to_s, logging: true,
-            headers: {"Content-Type" => check.up.request.content_type},
+            headers: {"Accept" => check.up.request.content_type},
             tls: uri.scheme == "https" ? OpenSSL::SSL::Context::Client.insecure : nil)
           ch.send({resp.status_code, resp.body})
         rescue ex
@@ -54,14 +55,26 @@ module HealthChecker
       rules.each do |rule|
         case rule.type
         when TYPE_JSON
-          Log.info { "Check rule type #{TYPE_JSON}, path: #{rule.path}, includes? #{rule.includes}" }
+          path_value = JsonParser.get_value(body, rule.path)
+          Log.info { "JsonParser: path_value=#{path_value}, body=#{body}, rule.path=#{rule.path}" }
+          if path_value
+            case path_value
+            when .includes? rule.includes
+              counter_check_ok += 1
+              Log.info { "#{"OK".colorize(:green)} - rule type \"#{rule.type}\", path: \"#{rule.path}\", includes? \"#{rule.includes}\"" }
+            else
+              Log.info { "#{"NOT OK".colorize(:red)} - rule type \"#{rule.type}\", path: \"#{rule.path}\", includes? \"#{rule.includes}\"" }
+            end
+          else
+            Log.error { "Value for path \"#{rule.path}\" not found!" }
+          end
         when TYPE_TEXT
           case body
           when .includes? rule.includes
             counter_check_ok += 1
-            Log.info { "#{"OK".colorize(:green)} - rule type \"#{TYPE_TEXT}\", includes? \"#{rule.includes}\"" }
+            Log.info { "#{"OK".colorize(:green)} - rule type \"#{rule.type}\", includes? \"#{rule.includes}\"" }
           else
-            Log.info { "#{"NOT OK".colorize(:red)} - rule type \"#{TYPE_TEXT}\", includes? \"#{rule.includes}\"" }
+            Log.info { "#{"NOT OK".colorize(:red)} - rule type \"#{rule.type}\", includes? \"#{rule.includes}\"" }
           end
         else
           Log.error { "Don't known this rule #{rule.type}!" }

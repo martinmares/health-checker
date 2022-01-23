@@ -62,7 +62,30 @@ checks:
     response:
       status_code: 503
       content_type: application/json
-      body: '{ "status": "DOWN", "description": "The service is unavailable!" }'
+      body: '{ "status": "DOWN", "description": "The service is unavailable (check 200=ok)!" }'
+- name: test-timeout-1s-200-ok-json
+  endpoint: http://httpstat.us/200?sleep=1000
+  up:
+    request:
+      timeout: 5
+      status_code: 200
+      content_type: application/json
+      rules:
+        - type: json
+          path: ".code"
+          includes: "200"
+        - type: json
+          path: ".description"
+          includes: "OK"
+    response:
+      status_code: 200
+      content_type: application/json
+      body: '{ "status": "UP", "description": "The service is up and running (check 200=ok, json)." }'
+  down:
+    response:
+      status_code: 503
+      content_type: application/json
+      body: '{ "status": "DOWN", "description": "The service is unavailable (check 200=ok, json)!" }'
 - name: test-timeout-1s-200-not-ok
   endpoint: http://httpstat.us/200?sleep=1000
   up:
@@ -80,12 +103,35 @@ checks:
     response:
       status_code: 200
       content_type: application/json
-      body: '{ "status": "UP", "description": "The service is up and running (check 200=ok)." }'
+      body: '{ "status": "UP", "description": "The service is up and running (check 200=not-ok)." }'
   down:
     response:
       status_code: 503
       content_type: application/json
-      body: '{ "status": "DOWN", "description": "The service is unavailable!" }'
+      body: '{ "status": "DOWN", "description": "The service is unavailable (check 200=not-ok)!" }'
+- name: test-timeout-1s-200-not-ok-json
+  endpoint: http://httpstat.us/200?sleep=1000
+  up:
+    request:
+      timeout: 5
+      status_code: 200
+      content_type: application/json
+      rules:
+        - type: json
+          path: ".code"
+          includes: "200"
+        - type: json
+          path: ".description"
+          includes: "NOT OK"
+    response:
+      status_code: 200
+      content_type: application/json
+      body: '{ "status": "UP", "description": "The service is up and running (check 200=not-ok, json)." }'
+  down:
+    response:
+      status_code: 503
+      content_type: application/json
+      body: '{ "status": "DOWN", "description": "The service is unavailable (check 200=not-ok, json)!" }'
 - name: test-timeout-1s-201-ok
   endpoint: http://httpstat.us/201?sleep=1000
   up:
