@@ -46,6 +46,11 @@ module HealthChecker
         "Ok - after #{sec}s of sleeping ..."
       end
 
+      get "/healthz" do |env|
+        env.response.content_type = "application/json"
+        "{ \"status\": \"UP\", \"description\": \"The service is up and running.\" }"
+      end
+
       @config.each_with_checks do |check|
         get "/check/#{check.name}" do |env|
           probe_result = Checker.probe(check)

@@ -11,7 +11,7 @@ COPY bin/health-checker-linux /app/health-checker
 RUN chmod +x /app/health-checker
 
 COPY conf/test.yml /app/conf/
-ADD public/ /app/public/
+COPY public/ /app/public/
 
 USER app
 WORKDIR /app
