@@ -26,6 +26,9 @@ module HealthChecker
     @[YAML::Field(key: "title")]
     property title : String
 
+    @[YAML::Field(key: "header")]
+    property header : String
+
     @[YAML::Field(key: "footer")]
     property footer : String
   end
@@ -65,22 +68,25 @@ module HealthChecker
     @[YAML::Field(key: "status_code")]
     property status_code : Int32
 
-    @[YAML::Field(key: "type")]
-    property type : String
+    @[YAML::Field(key: "content_type")]
+    property content_type : String
 
     @[YAML::Field(key: "rules")]
-    property type : Array(Rule)
+    property rules : Array(Rule)
   end
 
   class Rule
     include YAML::Serializable
 
-    @[YAML::Field(key: "path")]
-    property path : String
+    @[YAML::Field(key: "type")]
+    property type : String
 
-    @[YAML::Field(key: "value")]
-    property value : String
-  end
+    @[YAML::Field(key: "path", emit_null: true)]
+    property path : String?
+
+    @[YAML::Field(key: "includes")]
+    property includes : String
+end
 
   class Response
     include YAML::Serializable

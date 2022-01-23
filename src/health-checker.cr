@@ -33,6 +33,7 @@ module HealthChecker
         end
 
         _title = @config.html.title
+        _header = @config.html.header
         _footer = @config.html.footer
         _table = HtmlUtils.table_builder(headers, data_rows)
 
@@ -47,14 +48,16 @@ module HealthChecker
 
       @config.each_with_checks do |check|
         get "/check/#{check.name}" do |env|
-          status_code, body = Checker.probe(check)
+          probe_result = Checker.probe(check)
+          status_code, body = probe_result
           case {status_code, body}
           when {check.up.request.status_code, _}
-            Log.info { "probe status_code: #{status_code}, body: #{body}" }
-            env.response.content_type = check.up.response.content_type
-            check.up.response.body
+            Log.info { "probe up: #{status_code}, body: #{body}" }
+            env.response.status_code, env.response.content_type, response_body =
+              Checker.evaluation_of(check, probe_result)
+            response_body
           else
-            Log.error { "probe status_code: #{status_code}, body: #{body}" }
+            Log.error { "probe down: #{status_code}, body: #{body}" }
             env.response.content_type = check.down.response.content_type
             env.response.status_code = check.down.response.status_code
             check.down.response.body
