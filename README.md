@@ -18,9 +18,17 @@ sentry -b "crystal build ./src/health-checker.cr -o ./bin/health-checker" \
        --run-args "-c conf/dev.yml"
 ```
 
+```bash
+docker run --rm -it -v $(pwd):/workspace -w /workspace \
+    crystallang/crystal:latest-alpine \
+    shards build --production --static
+
+mv bin/health-checker bin/health-checker-linux
+```
+
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/health-checker/fork>)
+1. Fork it (<https://github.com/martinmares/health-checker/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -28,4 +36,4 @@ sentry -b "crystal build ./src/health-checker.cr -o ./bin/health-checker" \
 
 ## Contributors
 
-- [Martin Mareš](https://github.com/your-github-user) - creator and maintainer
+- [Martin Mareš](https://github.com/martinmares) - creator and maintainer
