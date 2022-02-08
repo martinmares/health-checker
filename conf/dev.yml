@@ -173,3 +173,45 @@ checks:
 - name: test-timeout-20s
   endpoint: http://httpstat.us/200?sleep=20000
   <<: *default_text_check
+- name: test-tcp-ok
+  tcp:
+    host: "oracleas.datalite.cz"
+    port: 2525
+  up:
+    request:
+      timeout: 5
+      status_code: 200
+      content_type: null
+      rules:
+        - type: text
+          includes: "OK"
+    response:
+      status_code: 200
+      content_type: application/json
+      body: '{ "status": "UP", "description": "The service is up and running (check tcp connect=ok)." }'
+  down:
+    response:
+      status_code: 503
+      content_type: application/json
+      body: '{ "status": "DOWN", "description": "The service is unavailable!" }'
+- name: test-tcp-failed
+  tcp:
+    host: "oracleas.datalite.cz"
+    port: 25
+  up:
+    request:
+      timeout: 5
+      status_code: 200
+      content_type: null
+      rules:
+        - type: text
+          includes: "OK"
+    response:
+      status_code: 200
+      content_type: application/json
+      body: '{ "status": "UP", "description": "The service is up and running (check tcp connect=ok)." }'
+  down:
+    response:
+      status_code: 503
+      content_type: application/json
+      body: '{ "status": "DOWN", "description": "The service is unavailable!" }'

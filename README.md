@@ -13,7 +13,7 @@ TODO: Write usage instructions here
 ## Development
 
 ```bash
-sentry -b "crystal build ./src/health-checker.cr -o ./bin/health-checker" \
+sentry -b "crystal build ./src/health_checker.cr -o ./bin/health-checker" \
        -r "./bin/health-checker" \
        --run-args "-c conf/dev.yml"
 ```

@@ -6,7 +6,7 @@ authors:
 
 targets:
   health-checker:
-    main: src/health-checker.cr
+    main: src/health_checker.cr
 
 dependencies:
   tallboy:

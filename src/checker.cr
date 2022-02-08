@@ -1,16 +1,25 @@
 require "crest"
 require "timeout"
 require "colorize"
+require "http/client"
+require "socket"
 
 require "../src/config"
 require "../src/json_parser"
 
 module HealthChecker
   class Checker
-    TYPE_JSON               = "json"
-    TYPE_TEXT               = "text"
+    # Types
+    TYPE_JSON = "json"
+    TYPE_TEXT = "text"
+
+    # Rule types
     RULE_TYPE_JSON_PATH     = "json_path"
     RULE_TYPE_RESPONSE_BODY = "response_body"
+
+    # Check types
+    CHECK_TYPE_HTTP = "http"
+    CHECK_TYPE_TCP  = "tcp"
 
     def self.probe(check)
       get(check)
@@ -21,16 +30,43 @@ module HealthChecker
 
     def self.get(check)
       ch = Channel({Int32, String}).new
-      uri = URI.parse(check.endpoint)
+
+      check_type = if check.endpoint.is_a?(String)
+                     CHECK_TYPE_HTTP
+                   elsif check.tcp && check.tcp.is_a?(Tcp)
+                     CHECK_TYPE_TCP
+                   end
+
+      Log.info { "Detected type: #{check_type}" }
 
       spawn do
         begin
-          resp = Crest.get(uri.to_s, logging: true,
-            headers: {"Accept" => check.up.request.content_type},
-            tls: uri.scheme == "https" ? OpenSSL::SSL::Context::Client.insecure : nil)
-          ch.send({resp.status_code, resp.body})
+          case check_type
+          when CHECK_TYPE_HTTP
+            uri = URI.parse(check.endpoint.as(String))
+            http_client = HTTP::Client.new(uri.host.as(String))
+            http_client.read_timeout = check.up.request.timeout
+            resp = Crest.get(uri.to_s,
+              logging: true,
+              http_client: http_client,
+              headers: {"Accept" => check.up.request.content_type},
+              tls: uri.scheme == "https" ? OpenSSL::SSL::Context::Client.insecure : nil)
+            ch.send({resp.status_code, resp.body})
+          when CHECK_TYPE_TCP
+            tcp = check.tcp.as(Tcp)
+            TCPSocket.open(tcp.host, tcp.port) {
+              ch.send({200, "Tcp check OK!"})
+            }
+          end
         rescue ex
-          Log.error { "Http client error: \"#{ex}\", uri: \"#{uri}\"" }
+          case check_type
+          when CHECK_TYPE_HTTP
+            Log.error { "Http client error: \"#{ex}\", uri: \"#{uri}\"" }
+          when CHECK_TYPE_TCP
+            tcp = check.tcp.as(Tcp)
+            ch.send({500, "Tcp check FAILED!"})
+            Log.error { "Tcp client error: \"#{ex}\", host: \"#{tcp.host}\", port: \"#{tcp.port}\"" }
+          end
         end
       end
 

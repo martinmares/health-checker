@@ -39,14 +39,27 @@ module HealthChecker
     @[YAML::Field(key: "name")]
     property name : String
 
-    @[YAML::Field(key: "endpoint")]
-    property endpoint : String
+    @[YAML::Field(key: "endpoint", emit_null: true)]
+    property endpoint : String?
+
+    @[YAML::Field(key: "tcp", emit_null: true)]
+    property tcp : Tcp?
 
     @[YAML::Field(key: "up")]
     property up : Up
 
     @[YAML::Field(key: "down")]
     property down : Down
+  end
+
+  class Tcp
+    include YAML::Serializable
+
+    @[YAML::Field(key: "host")]
+    property host : String
+
+    @[YAML::Field(key: "port")]
+    property port : Int32
   end
 
   class Up

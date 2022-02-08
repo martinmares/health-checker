@@ -25,7 +25,7 @@ module HealthChecker
 
     def run
       get "/" do
-        headers = ["Check name", "Try it!"]
+        headers = ["Name", "Try it!"]
         data_rows = [] of Array(String)
 
         @config.each_with_checks do |check|
