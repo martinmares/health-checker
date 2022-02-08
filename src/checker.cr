@@ -44,13 +44,15 @@ module HealthChecker
           case check_type
           when CHECK_TYPE_HTTP
             uri = URI.parse(check.endpoint.as(String))
-            http_client = HTTP::Client.new(uri.host.as(String))
+            http_client = HTTP::Client.new(
+              host: uri.host.as(String),
+              port: uri.port.as(Int32),
+              tls: uri.scheme == "https" ? OpenSSL::SSL::Context::Client.insecure : nil)
             http_client.read_timeout = check.up.request.timeout
             resp = Crest.get(uri.to_s,
               logging: true,
               http_client: http_client,
-              headers: {"Accept" => check.up.request.content_type},
-              tls: uri.scheme == "https" ? OpenSSL::SSL::Context::Client.insecure : nil)
+              headers: {"Accept" => check.up.request.content_type})
             ch.send({resp.status_code, resp.body})
           when CHECK_TYPE_TCP
             tcp = check.tcp.as(Tcp)
