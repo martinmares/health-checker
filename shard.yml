@@ -1,5 +1,5 @@
 name: health-checker
-version: 0.1.0
+version: 0.1.1
 
 authors:
   - Martin Mareš <mares@datalite.cz>
@@ -15,8 +15,6 @@ dependencies:
     github: kemalcr/kemal
   crest:
     github: mamantoha/crest
-  markd:
-    github: icyleaf/markd
   timeout:
     github: hugoabonizio/timeout.cr
 

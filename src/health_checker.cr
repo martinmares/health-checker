@@ -3,7 +3,6 @@ require "kemal"
 require "tallboy"
 require "benchmark"
 require "colorize"
-require "markd"
 require "ecr"
 
 require "../src/config"
