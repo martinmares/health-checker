@@ -24,6 +24,8 @@ module HealthChecker
           return json[field].as_s
         elsif index == (paths.size - 1) && json[field].as_i?
           return json[field].as_i.to_s
+        elsif index == (paths.size - 1) && json[field].as_bool?
+          return json[field].as_bool.to_s
         else
           search_path(json[field], paths, index + 1)
         end
