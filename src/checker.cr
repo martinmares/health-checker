@@ -28,6 +28,17 @@ module HealthChecker
       {500, "Internal Server Error (\"#{ex}\")"}
     end
 
+    def self.uri_port(uri)
+      uri.port || case uri.scheme
+                  when "http"
+                    80
+                  when "https"
+                    443
+                  else
+                    80
+                  end
+    end
+
     def self.get(check)
       ch = Channel({Int32, String}).new
 
@@ -46,7 +57,7 @@ module HealthChecker
             uri = URI.parse(check.endpoint.as(String))
             http_client = HTTP::Client.new(
               host: uri.host.as(String),
-              port: uri.port.as(Int32),
+              port: uri_port(uri),
               tls: uri.scheme == "https" ? OpenSSL::SSL::Context::Client.insecure : nil)
             http_client.read_timeout = check.up.request.timeout
             resp = Crest.get(uri.to_s,
