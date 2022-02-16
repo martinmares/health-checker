@@ -4,11 +4,14 @@ require "log"
 
 module HealthChecker
   class ArgParser
-    getter :args
+    getter :args, :args_multi
+
     @args : Hash(Symbol, String)
+    @args_multi : Hash(Symbol, Array(String))
 
     def initialize
       @args = Hash(Symbol, String).new
+      @args_multi = Hash(Symbol, Array(String)).new
     end
 
     def parse

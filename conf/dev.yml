@@ -215,3 +215,22 @@ checks:
       status_code: 503
       content_type: application/json
       body: '{ "status": "DOWN", "description": "The service is unavailable!" }'
+- name: test-different-http-port-ok
+  endpoint: http://oracleas.datalite.cz:41039
+  up:
+    request:
+      timeout: 5
+      status_code: 200
+      content_type: text/plain
+      rules:
+        - type: text
+          includes: "<!doctype html>"
+    response:
+      status_code: 200
+      content_type: application/json
+      body: '{ "status": "UP", "description": "The service is up and running (check http port 41039=ok)." }'
+  down:
+    response:
+      status_code: 503
+      content_type: application/json
+      body: '{ "status": "DOWN", "description": "The service is unavailable (check http port 41039=ok)!" }'
