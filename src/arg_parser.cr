@@ -4,7 +4,7 @@ require "log"
 
 module HealthChecker
   class ArgParser
-    getter args
+    getter :args
     @args : Hash(Symbol, String)
 
     def initialize
@@ -12,11 +12,10 @@ module HealthChecker
     end
 
     def parse
-      args = Hash(Symbol, String).new
       OptionParser.parse do |parser|
         parser.banner = "Usage: health-checker [arguments]"
         parser.on("-c CONFIG", "--config=CONFIG", "Specifies the name of the configuration file") do |_config|
-          args[:config] = _config
+          @args[:config] = _config
         end
         parser.on("-h", "--help", "Show this help") do
           puts parser
@@ -29,7 +28,6 @@ module HealthChecker
         end
       end
 
-      @args = args
     end
 
     def check
